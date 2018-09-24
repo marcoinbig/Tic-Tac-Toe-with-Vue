@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="mainBox" >
+        <div class="mainBox">
           <div class="infoBox" :class="{draw: this.game.winner === 'Tie'}">
             {{infoText}}
           </div>
@@ -14,21 +14,21 @@
             >{{square.value}}</div>
             
           </div>
+          <transition name="fade"><div v-if="this.game.currentPlayer === 'O' && !this.game.winner">The BOT is thinking...</div></transition>
           <div><button class="btn" @click="restart()">RESTART</button></div>
         </div>
-
     </div>
 </template>
 
 <script>
-import { Game } from "@/main/Game.js";
+import { Bot } from "@/main/Bot.js";
 export default {
   mounted() {
     // console.log(this.game.makeMove(3));
   },
   data() {
     return {
-      game: new Game()
+      game: new Bot()
     };
   },
   computed: {
@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     restart() {
-      this.game = new Game();
+      this.game = new Bot();
     }
   }
 };
