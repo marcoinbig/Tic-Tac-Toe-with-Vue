@@ -22,21 +22,44 @@
     font-weight: bold;
     color: #2c3e50;
     &.router-link-exact-active {
-      color: rgba(0, 68, 255, 0.9);
+      color: rgba(39, 170, 225, 0.9);
     }
   }
 }
 $size_border: 5px;
-$border_color: rgba(0, 68, 255, 0.9);
+$border_color: rgba(39, 170, 225, 0.9);
 // could be use a Boostrap framework for this.
 // i think is useless for a project of this.
 .btn {
-  margin: 1em;
+  position: relative;
+  vertical-align: top;
+  width: 100%;
+  height: 60px;
+  padding: 0;
+  font-size: 22px;
+  color: white;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  background: #27aae1;
+  border: 0;
+  border-bottom: 2px solid #27aae1;
+  cursor: pointer;
+  -webkit-box-shadow: inset 0 -2px #27aae1;
+  box-shadow: inset 0 -2px #27aae1;
+}
+.btn:hover {
+  background-color: #259bce;
+}
+.btn:active {
+  top: 1px;
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 .mainBox {
   margin: 0 auto;
   border: 1px solid black;
-  width: 500px;
+  width: 95%;
   flex-wrap: wrap;
 }
 
@@ -54,7 +77,7 @@ $border_color: rgba(0, 68, 255, 0.9);
 }
 .gameBody {
   padding: 25px;
-  height: 500px;
+  height: 560px;
   display: flex;
   flex-wrap: wrap;
   box-sizing: border-box;

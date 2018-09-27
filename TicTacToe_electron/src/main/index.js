@@ -32,11 +32,11 @@ function createWindow() {
         submenu: [{
             label: 'Repository of this app.',
             click() {
-              shell.openExternal('https://github.com/marcoinbig/TicTacToe_electron')
+              shell.openExternal('https://github.com/marcoinbig/Tic-Tac-Toe-with-Vue')
             }
           },
           {
-            label: 'How can you make this app.',
+            label: 'How you can make this app.',
             click() {
               shell.openExternal('https://www.youtube.com/watch?v=rqb4FgVNrrM')
             }

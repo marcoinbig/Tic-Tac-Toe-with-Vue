@@ -30,6 +30,7 @@ export class Bot extends Game {
      * Added setTimeout for at least 2 seconds of late
      */
     botMove() {
+        let time = Math.floor(Math.random() * 1000)
         setTimeout(() => {
             if (this.winner || this.counterMoves === 9) return;
             if (this.counterMoves === 0 && this.currentPlayer === Game.O) {
@@ -40,6 +41,20 @@ export class Bot extends Game {
                 this.currentPlayer = Game.X;
                 return;
             } else {
+                for (let el of this.possibilities) {
+                    let [a, b, c] = el;
+                    if (this.checkMy(a, b, c)) {
+                        for (let elem of el) {
+                            if (!this.squares[elem].value) {
+                                this.squares[elem].value = this.currentPlayer;
+                                this.counterMoves++;
+                                this.checkWinner();
+                                this.currentPlayer = this.currentPlayer === Game.O ? Game.X : Game.O;
+                                return
+                            }
+                        }
+                    }
+                }
                 for (let el of this.possibilities) {
                     let [a, b, c] = el;
                     if (this.checkEnemy(a, b, c)) {
@@ -79,7 +94,7 @@ export class Bot extends Game {
                 this.checkWinner();
                 this.currentPlayer = this.currentPlayer === Game.O ? Game.X : Game.O;
             }
-        }, 2000);
+        }, 1000 + time);
     }
     /**
      * @function checkEnemy
@@ -93,6 +108,15 @@ export class Bot extends Game {
         let min_count = 2;
         for (let el of first) {
             if (this.squares[el].value === Game.X) min_count--;
+        }
+        return min_count <= 0;
+    }
+
+    checkMy(a, b, c) {
+        let first = [a, b, c];
+        let min_count = 2;
+        for (let el of first) {
+            if (this.squares[el].value === Game.O) min_count--;
         }
         return min_count <= 0;
     }

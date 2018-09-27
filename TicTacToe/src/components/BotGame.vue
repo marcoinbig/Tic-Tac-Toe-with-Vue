@@ -14,7 +14,11 @@
             >{{square.value}}</div>
             
           </div>
-          <transition name="fade"><div v-if="this.game.currentPlayer === 'O' && !this.game.winner">The BOT is thinking...</div></transition>
+          <transition name="fade">
+            <div v-if="this.game.currentPlayer === 'O' && !this.game.winner" style="margin-bottom: 10px; margin-top: 10px">
+              I'm thinking...
+              </div>
+          </transition>
           <div><button class="btn" @click="restart()">RESTART</button></div>
         </div>
     </div>
@@ -50,5 +54,5 @@ export default {
 };
 </script>
 
-<style >
+<style>
 </style>
