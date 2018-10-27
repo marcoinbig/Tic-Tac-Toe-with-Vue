@@ -1,12 +1,70 @@
 <template>
+<div>
+    <div class="title-bar mt-1">
+        <div class="app-name-container">
+          <span>Tic Tac Toe</span>
+        </div>
+        <div class="window-controls-container">
+          <button 
+            id="minimize-button"
+            class="minimize-button btn-flat">
+            <svg x="0px" y="0px" viewBox="-7 -7 20 13">
+                <rect fill="#FFF" width="10" height="1"></rect>
+            </svg>
+          </button>
+          <button 
+            id="min-max-button"
+            class="min-max-button btn-flat"
+            disabled
+            >
+            <svg class="maximize-svg" x="0px" y="0px" viewBox="-7 -3 20 13">
+                <mask id="Mask">
+                    <rect fill="#FFFFFF" width="10" height="15"></rect>
+                    <path fill="#000000" d="M 3 1 L 9 1 L 9 7 L 8 7 L 8 2 L 3 2 L 3 1 z"/>
+                    <path fill="#000000" d="M 1 3 L 7 3 L 7 9 L 1 9 L 1 3 z"/>
+                </mask>
+                <path fill="#FFF" d="M 2 0 L 10 0 L 10 8 L 8 8 L 8 10 L 0 10 L 0 2 L 2 2 L 2 0 z" mask="url(#Mask)"/>
+            </svg>
+          </button>
+          
+          <button 
+            id="close-button"
+            class="close-button btn-flat">
+            <svg x="0px" y="0px" viewBox="-7 -3 20 13">
+                <polygon fill="#FFF" points="10,1 9,0 5,4 1,0 0,1 4,5 0,9 1,10 5,6 9,10 10,9 6,5"></polygon>
+            </svg>
+          </button>
+        </div>
+      </div>
   <div id="app">
     <div id="nav">
       <router-link :to="{name: 'home'}" style="margin-right: 10px">1vs1</router-link>
-    <router-link :to="{name: 'bot'}">1vsAI</router-link></div>
-    
+      <router-link :to="{name: 'bot'}" style="margin-right: 10px">1vsAI</router-link>
+      <router-link :to="{name: 'online'}">Online Mode</router-link>
+    </div>
     <router-view/>
   </div>
+</div>
 </template>
+<script>
+import { remote } from 'electron'
+export default {
+  mounted () {
+      document.getElementById('minimize-button').addEventListener('click', (e) => {
+        remote.getCurrentWindow().minimize();
+    });
+    document.getElementById('min-max-button').addEventListener('click', (e) => {
+        
+        let current = remote.getCurrentWindow();
+        current.isMaximized() ? current.restore() : current.maximize()
+    });
+    document.getElementById('close-button').addEventListener('click', (e) => {
+        remote.app.quit();
+    });
+
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
@@ -15,6 +73,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  
 }
 #nav {
   padding: 30px;
@@ -26,6 +85,54 @@
     }
   }
 }
+.title-bar {
+  -webkit-app-region: drag;
+  margin: 0;
+  display: flex;
+  background-color: grey;
+  width: 100%;
+  height: 30px;
+}
+.app-name-container  {
+  text-align: center;
+  padding-left: 10px;
+  margin-top: 7px;
+  color: white;
+  font-weight: bold;
+}
+.window-controls-container {
+  background-color: #2c3e50de;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-grow: 1;
+}
+button {
+  -webkit-app-region: no-drag;
+  
+}
+.btn-flat {
+  position: relative;
+  vertical-align: top;
+  width: 40px;
+  height: 30px;
+  padding: 0 5px 0 0;
+  color: white;
+  text-align: center;
+  background-color: grey;
+  border: 0;
+  cursor: pointer;
+}
+.btn-flat:hover {
+  background-color: rgb(105, 105, 105);
+}
+.btn-flat:hover:nth-child(3) {
+  background-color: rgb(236, 61, 61);
+}
+/*.window-controls-container > button {
+  margin-right: 10px;
+}*/
+
 $size_border: 5px;
 $border_color: rgba(39, 170, 225, 0.9);
 // could be use a Boostrap framework for this.

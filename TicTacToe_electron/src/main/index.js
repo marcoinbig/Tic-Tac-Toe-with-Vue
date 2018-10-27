@@ -55,14 +55,14 @@ function createWindow() {
   const mainMenu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(mainMenu)
   mainWindow = new BrowserWindow({
-    height: 800,
+    height: 850,
+    frame: false,
     useContentSize: true,
     resizable: false,
     webPreferences: {
       devTools: false
     },
-    maximizable: false,
-    fullscreen: false,
+    maximizable: true,
     width: 600
   });
 
@@ -71,6 +71,7 @@ function createWindow() {
   mainWindow.on("closed", () => {
     mainWindow = null;
   });
+  
 }
 
 
@@ -85,9 +86,10 @@ app.on("window-all-closed", () => {
 app.on("activate", () => {
   if (mainWindow === null) {
     createWindow();
+    
   }
+  
 });
-
 /**
  * Auto Updater
  *

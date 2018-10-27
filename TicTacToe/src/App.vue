@@ -1,12 +1,16 @@
 <template>
+<div>
   <div id="app">
     <div id="nav">
       <router-link :to="{name: 'home'}" style="margin-right: 10px">1vs1</router-link>
-    <router-link :to="{name: 'bot'}">1vsAI</router-link></div>
-    
+      <router-link :to="{name: 'bot'}" style="margin-right: 10px">1vsAI</router-link>
+      <router-link :to="{name: 'online'}">Online Mode</router-link>
+    </div>
     <router-view/>
   </div>
+</div>
 </template>
+
 
 <style lang="scss">
 #app {
@@ -15,6 +19,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  
 }
 #nav {
   padding: 30px;
@@ -26,6 +31,54 @@
     }
   }
 }
+.title-bar {
+  -webkit-app-region: drag;
+  margin: 0;
+  display: flex;
+  background-color: grey;
+  width: 100%;
+  height: 30px;
+}
+.app-name-container  {
+  text-align: center;
+  padding-left: 10px;
+  margin-top: 7px;
+  color: white;
+  font-weight: bold;
+}
+.window-controls-container {
+  background-color: #2c3e50de;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-grow: 1;
+}
+button {
+  -webkit-app-region: no-drag;
+  
+}
+.btn-flat {
+  position: relative;
+  vertical-align: top;
+  width: 40px;
+  height: 30px;
+  padding: 0 5px 0 0;
+  color: white;
+  text-align: center;
+  background-color: grey;
+  border: 0;
+  cursor: pointer;
+}
+.btn-flat:hover {
+  background-color: rgb(105, 105, 105);
+}
+.btn-flat:hover:nth-child(3) {
+  background-color: rgb(236, 61, 61);
+}
+/*.window-controls-container > button {
+  margin-right: 10px;
+}*/
+
 $size_border: 5px;
 $border_color: rgba(39, 170, 225, 0.9);
 // could be use a Boostrap framework for this.
@@ -59,7 +112,7 @@ $border_color: rgba(39, 170, 225, 0.9);
 .mainBox {
   margin: 0 auto;
   border: 1px solid black;
-  width: 95%;
+  width: 40%;
   flex-wrap: wrap;
 }
 
