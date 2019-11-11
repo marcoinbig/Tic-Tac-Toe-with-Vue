@@ -56,18 +56,31 @@ server.listen(port, host, 511, () => {
 
 var players = []
 var rooms = new Map()
+var getRoomList = () => new Promise((res, req) => {
+  let roomList = []
+  for (let ID of rooms.keys()) {
+    
+    roomList.push(ID)
+  }
+  console.log(roomList)
+  res(roomList)
+})
 const Game = require('./Game.js')
 io.on('connection', function(socket){
     console.log('\x1b[33m' +socket.id + '\x1b[0m connected')
     players.unshift(socket.id)
     fs.writeFileSync('./players.txt', players)
     io.emit('numberOfPlayers', players.length)
+    getRoomList().then(roomList => {
+      io.emit('roomList', roomList)
+    }).catch(console.error)
+    
 
     socket.on('newUser', function () {
         let inset = false
         const ROOMID = random.generate({charset: 'numeric', length: 8})
         if (rooms.size < 1){
-          rooms.set(ROOMID, {player1: socket.id, player2: null, game: null})
+          rooms.set(ROOMID, {player1: socket.id, player2: null, game: null, spectators: []})
           io.to(socket.id).emit('getWhoIAm', 'O')
           io.to(socket.id).emit('getRoomID', ROOMID)
           let el = rooms.values();
@@ -83,6 +96,14 @@ io.on('connection', function(socket){
               io.to(socket.id).emit('getWhoIAm', 'X')
               io.to(room.player2).emit('getData', room.game)
               io.to(room.player1).emit('getData', room.game)
+              getRoomList().then(roomList => {
+                io.emit('roomList', roomList)
+              }).catch(console.error)
+              for(let spec of room.spectators) {
+                io.to(spec).emit('numberOfSpec', room.spectators.length)
+              }
+              io.to(room.player1).emit('numberOfSpec', room.spectators.length)
+              io.to(room.player2).emit('numberOfSpec', room.spectators.length)
               let el = rooms.values();
               for(let i = 0; i < rooms.size; i++) {
                 fs.writeFileSync('./rooms.txt', JSON.stringify(el.next().value))
@@ -103,6 +124,9 @@ io.on('connection', function(socket){
       rooms.get(data.roomID).game.makeMove(data.i)
       io.to(rooms.get(data.roomID).player1).emit('getData', rooms.get(data.roomID).game)
       io.to(rooms.get(data.roomID).player2).emit('getData', rooms.get(data.roomID).game)
+      for(let spec of rooms.get(data.roomID).spectators) {
+        io.to(spec).emit('getData', rooms.get(data.roomID).game)
+      }
     })
     socket.on('restart', function (roomID = null) {
         let room = rooms.get(roomID)
@@ -127,10 +151,34 @@ io.on('connection', function(socket){
               rooms.delete(key)
           } else if(rooms.get(key).player2 === socket.id){
             rooms.get(key).player2 = null
+          } else if(rooms.get(key).spectators.includes(socket.id)){
+            rooms.get(key).spectators.splice(rooms.get(key).spectators.indexOf(socket.id), 1)
+            for(let spec of rooms.get(key).spectators) {
+              io.to(spec).emit('numberOfSpec', rooms.get(key).spectators.length)
+            }
           }
         }
         io.emit('numberOfPlayers', players.length)
         console.log('\x1b[31m' + socket.id + '\x1b[0m disconnected')
+    })
+    socket.on('spectate', function(roomID) {
+      let room = rooms.get(roomID)
+      room.spectators.push(socket.id)
+      rooms.set(roomID, room)
+      io.to(socket.id).emit('getSpectateData', room.game)
+      for(let spec of room.spectators) {
+        io.to(spec).emit('numberOfSpec', room.spectators.length)
+      }
+      io.to(room.player1).emit('numberOfSpec', room.spectators.length)
+      io.to(room.player2).emit('numberOfSpec', room.spectators.length)
+    })
+    socket.on('disconnectSpec', function(roomID) {
+      let room = rooms.get(roomID)
+      room.spectators.splice(socket.id, 1)
+      rooms.set(roomID, room)
+      for(let spec of room.spectators) {
+        io.to(spec).emit('numberOfSpec', room.spectators.length)
+      }
     })
 })
 

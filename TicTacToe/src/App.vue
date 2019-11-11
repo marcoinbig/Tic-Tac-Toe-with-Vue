@@ -109,12 +109,28 @@ $border_color: rgba(39, 170, 225, 0.9);
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-.mainBox {
-  margin: 0 auto;
-  border: 1px solid black;
-  width: 40%;
-  flex-wrap: wrap;
+
+@media screen and (max-width: 600px) {
+    .mainBox {
+      margin: 0 auto;
+      border: 1px solid black;
+      width: 80%;
+      flex-wrap: wrap;
+    }
 }
+
+@media screen and (min-width: 600px) {
+    .mainBox {
+      margin: 0 auto;
+      border: 1px solid black;
+      width: 500px;
+      flex-wrap: wrap;
+    }
+}
+
+
+
+
 
 .infoBox {
   font-size: 14px;

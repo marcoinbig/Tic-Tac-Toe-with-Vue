@@ -54,8 +54,6 @@ class Game {
      * @description check for horizontal/vertical/cross and then check if the player who play last wins or get a draw.
      */
     checkWinner() {
-
-
         this.possibilities.forEach(el => {
             let [a, b, c] = el
             if (this.squares[a].value &&
