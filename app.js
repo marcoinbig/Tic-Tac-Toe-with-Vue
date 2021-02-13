@@ -69,7 +69,7 @@ const Game = require('./Game.js')
 io.on('connection', function(socket){
     console.log('\x1b[33m' +socket.id + '\x1b[0m connected')
     players.unshift(socket.id)
-    fs.writeFileSync('./players.txt', players)
+    fs.writeFileSync('./players.txt', players.toString())
     io.emit('numberOfPlayers', players.length)
     getRoomList().then(roomList => {
       io.emit('roomList', roomList)
@@ -84,9 +84,9 @@ io.on('connection', function(socket){
           io.to(socket.id).emit('getWhoIAm', 'O')
           io.to(socket.id).emit('getRoomID', ROOMID)
           let el = rooms.values();
-          for(let i = 0; i < rooms.size; i++) {
+          /*for(let i = 0; i < rooms.size; i++) {
             fs.writeFileSync('./rooms.txt', JSON.stringify(el.next().value))
-        }
+          }*/
         } else {
         for (let [key, room] of rooms) {
             if (room.player2 === null) {
