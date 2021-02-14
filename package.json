@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "psl": "^1.8.0",
     "rxjs": "^6.5.3",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
@@ -38,7 +39,6 @@
       "plugin:vue/essential",
       "@vue/prettier"
     ],
-    
     "rules": {},
     "parserOptions": {
       "parser": "babel-eslint"
