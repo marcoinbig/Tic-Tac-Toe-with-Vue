@@ -15,7 +15,7 @@ export default {
     Online
   },
   created () {
-    Vue.use(VueSocketio, 'http://localhost:8000')
+    Vue.use(VueSocketio, 'https://tictactoe-serverdesk.herokuapp.com/')
     this.$socket.connect()
   },
 };
