@@ -1,9 +1,0 @@
-{
-    "algorithm": "RS256",
-    "issuer": "api.service.com",
-    "expiresIn": "3600s",
-    "notBefore": "1s",
-    "noTimestamp": false,
-    "private_key": "../../../certs/private.pem",
-    "public_key": "../../../certs/public.pem"
-}
