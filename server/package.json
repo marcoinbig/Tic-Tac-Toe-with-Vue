@@ -26,7 +26,7 @@
     "nodemailer": "^4.4.1",
     "pm2": "^2.10.4",
     "process.argv": "^0.1.0",
-    "pug": "^2.0.4",
+    "pug": "^3.0.1",
     "pusher": "^1.5.1",
     "randomstring": "^1.1.5",
     "request": "^2.83.0",
