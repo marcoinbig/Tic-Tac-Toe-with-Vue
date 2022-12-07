@@ -16,7 +16,7 @@
     "cors": "^2.8.4",
     "dotenv": "^4.0.0",
     "email-templates": "^3.3.2",
-    "express": "^4.16.2",
+    "express": "^4.17.3",
     "helmet": "^3.21.2",
     "joi": "^13.1.0",
     "jsonwebtoken": "^8.1.0",
